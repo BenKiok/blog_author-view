@@ -1,7 +1,9 @@
+import Login from './Login';
+
 function App() {
   return (
-    <div className="App">
-      <h1>Yerrrrrrrr</h1>
+    <div className='App'>
+      <Login/>
     </div>
   );
 }
