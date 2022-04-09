@@ -1,11 +1,11 @@
-function Login() {
+function Login(props) {
   const fetchLoginToken = async (event, func) => {
     event.preventDefault();
     const loginData = JSON.stringify({
       username: event.target[0].value,
       password: event.target[1].value
     });
-    const token = await fetch('http://localhost:4000/api/user/login', 
+    const authData = await fetch('http://localhost:4000/api/user/login', 
     {
       method: 'POST',
       headers: {
@@ -16,13 +16,13 @@ function Login() {
     .then(res => res.json())
     .catch(err => console.log(err));
 
-    func(token);
+    func(authData.token);
   }
 
   return (
     <div className='login'>
       <h1>Login</h1>
-      <form onSubmit={e => fetchLoginToken(e, d => console.log(d))}>
+      <form onSubmit={e => fetchLoginToken(e, props.handleLogin)}>
         <label>Username
           <input type='text' name='username' placeholder='JohnDoe123'/>
         </label>
