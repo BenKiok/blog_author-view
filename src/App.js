@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Login from './Login';
+import Nav from './Nav';
 
 function App() {
   const [ jwtoken, setJWToken ] = useState(null);
@@ -10,6 +11,7 @@ function App() {
   if (jwtoken && typeof jwtoken === 'string') {
     return (
       <div className='App'>
+        <Nav/>
         <h1>You are logged in!</h1>
       </div>
     )
