@@ -1,11 +1,12 @@
 function Login(props) {
-  const fetchLoginToken = async (event, func) => {
+  const fetchLoginToken = (event, func) => {
     event.preventDefault();
     const loginData = JSON.stringify({
       username: event.target[0].value,
       password: event.target[1].value
     });
-    const authData = await fetch('http://localhost:4000/api/user/login', 
+    
+    fetch('http://localhost:4000/api/user/login', 
     {
       method: 'POST',
       headers: {
@@ -14,9 +15,8 @@ function Login(props) {
       body: loginData
     })
     .then(res => res.json())
+    .then(data => func(data.token))
     .catch(err => console.log(err));
-
-    func(authData.token);
   }
 
   return (
