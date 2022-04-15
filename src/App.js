@@ -35,7 +35,7 @@ function App() {
       <div className='App'>
         <Nav handleBool={handlePublishBool} toggleForm={toggleFormBool}/>
         {formBool ? <NewArticleForm refreshList={fetchArticles} token={jwtoken} toggleForm={toggleFormBool}/> : null}
-        <List data={articles} isPublished={showPublished}/>
+        <List data={articles} isPublished={showPublished} token={jwtoken} refreshList={fetchArticles}/>
       </div>
     )
   } else {
