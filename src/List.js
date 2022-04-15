@@ -1,5 +1,6 @@
 import DeleteButton from './DeleteButton';
 import PublishButton from './PublishButton';
+import UnpublishButton from './UnpublishButton';
 
 function List(props) {
   return (
@@ -13,7 +14,7 @@ function List(props) {
             <DeleteButton url={obj._id + '/delete'} token={props.token} refreshList={props.refreshList}/>
             {
              obj.published ?
-             null :
+             <UnpublishButton url={obj._id + '/unpublish'} token={props.token} refreshList={props.refreshList}/> :
              <PublishButton url={obj._id + '/publish'} token={props.token} refreshList={props.refreshList}/>
             }
           </div>
