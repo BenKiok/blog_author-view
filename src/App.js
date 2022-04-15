@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import NewArticleForm from './NewArticleForm';
 import Login from './Login';
 import List from './List';
 import Nav from './Nav';
@@ -7,6 +8,7 @@ function App() {
   const [ showPublished, setPublishBool ] = useState(true);
   const [ articles, setArticles ] = useState([]);
   const [ jwtoken, setJWToken ] = useState(null);
+  const [ formBool, setFormBool ] = useState(false);
   const handlePublishBool = bool => {
     setPublishBool(bool);
   }
@@ -24,11 +26,15 @@ function App() {
     setJWToken(token);
     fetchArticles();
   }
+  const toggleFormBool = () => {
+    setFormBool(!formBool);
+  }
 
   if (jwtoken && typeof jwtoken === 'string') {
     return (
       <div className='App'>
-        <Nav handleBool={handlePublishBool}/>
+        <Nav handleBool={handlePublishBool} toggleForm={toggleFormBool}/>
+        {formBool ? <NewArticleForm refreshList={fetchArticles} token={jwtoken} toggleForm={toggleFormBool}/> : null}
         <List data={articles} isPublished={showPublished}/>
       </div>
     )
