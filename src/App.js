@@ -13,7 +13,11 @@ function App() {
   const fetchArticles = () => {
     fetch('http://localhost:4000/api/posts')
       .then(res => res.json())
-      .then(data => setArticles(data))
+      .then(data => {
+        let arr = [];
+        data.forEach(obj => arr.unshift(obj));
+        setArticles(arr);
+      })
       .catch(err => console.log(err));
   }
   const passToken = token => {
