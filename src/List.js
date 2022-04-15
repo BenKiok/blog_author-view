@@ -1,4 +1,5 @@
 import DeleteButton from './DeleteButton';
+import PublishButton from './PublishButton';
 
 function List(props) {
   return (
@@ -10,6 +11,11 @@ function List(props) {
             <h3>{obj.time.created}</h3>
             <p>{obj.content}</p>
             <DeleteButton url={obj._id + '/delete'} token={props.token} refreshList={props.refreshList}/>
+            {
+             obj.published ?
+             null :
+             <PublishButton url={obj._id + '/publish'} token={props.token} refreshList={props.refreshList}/>
+            }
           </div>
         )
       })}
