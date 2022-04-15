@@ -5,15 +5,7 @@ import Nav from './Nav';
 
 function App() {
   const [ showPublished, setPublishBool ] = useState(true);
-  const [ articles, setArticles ] = useState([
-    {
-      title: 'No articles.',
-      content: '',
-      time: {
-        created: ''
-      }
-    }
-  ]);
+  const [ articles, setArticles ] = useState([]);
   const [ jwtoken, setJWToken ] = useState(null);
   const handlePublishBool = bool => {
     setPublishBool(bool);
