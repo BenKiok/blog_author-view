@@ -1,3 +1,4 @@
+import EditButton from './EditButton';
 import DeleteButton from './DeleteButton';
 import PublishButton from './PublishButton';
 import UnpublishButton from './UnpublishButton';
@@ -11,6 +12,7 @@ function List(props) {
             <h2>{obj.title}</h2>
             <h3>{obj.time.created}</h3>
             <p>{obj.content}</p>
+            <EditButton article={obj} toggleForm={props.toggleForm}/>
             <DeleteButton url={obj._id + '/delete'} token={props.token} refreshList={props.refreshList}/>
             {
              obj.published ?

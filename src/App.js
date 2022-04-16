@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import NewArticleForm from './NewArticleForm';
+import EditArticleForm from './EditArticleForm';
 import Login from './Login';
 import List from './List';
 import Nav from './Nav';
@@ -9,6 +10,8 @@ function App() {
   const [ articles, setArticles ] = useState([]);
   const [ jwtoken, setJWToken ] = useState(null);
   const [ formBool, setFormBool ] = useState(false);
+  const [ editBool, setEditBool ] = useState(false);
+  const [ articleToEdit, setArticleToEdit ] = useState(false);
   const handlePublishBool = bool => {
     setPublishBool(bool);
   }
@@ -29,13 +32,18 @@ function App() {
   const toggleFormBool = () => {
     setFormBool(!formBool);
   }
+  const toggleEditStates = (obj={}) => {
+    setEditBool(!editBool);
+    setArticleToEdit(obj);
+  }
 
   if (jwtoken && typeof jwtoken === 'string') {
     return (
       <div className='App'>
         <Nav handleBool={handlePublishBool} toggleForm={toggleFormBool}/>
         {formBool ? <NewArticleForm refreshList={fetchArticles} token={jwtoken} toggleForm={toggleFormBool}/> : null}
-        <List data={articles} isPublished={showPublished} token={jwtoken} refreshList={fetchArticles}/>
+        {editBool ? <EditArticleForm article={articleToEdit} refreshList={fetchArticles} token={jwtoken} toggleForm={toggleEditStates}/> : null}
+        <List data={articles} isPublished={showPublished} token={jwtoken} refreshList={fetchArticles} toggleForm={toggleEditStates}/>
       </div>
     )
   } else {
