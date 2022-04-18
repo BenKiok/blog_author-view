@@ -11,7 +11,7 @@ function App() {
   const [ jwtoken, setJWToken ] = useState(null);
   const [ formBool, setFormBool ] = useState(false);
   const [ editBool, setEditBool ] = useState(false);
-  const [ articleToEdit, setArticleToEdit ] = useState(false);
+  const [ article, setArticle ] = useState(null);
   const handlePublishBool = bool => {
     setPublishBool(bool);
   }
@@ -34,7 +34,7 @@ function App() {
   }
   const toggleEditStates = (obj={}) => {
     setEditBool(!editBool);
-    setArticleToEdit(obj);
+    setArticle(obj);
   }
 
   if (jwtoken && typeof jwtoken === 'string') {
@@ -42,7 +42,7 @@ function App() {
       <div className='App'>
         <Nav handleBool={handlePublishBool} toggleForm={toggleFormBool}/>
         {formBool ? <NewArticleForm refreshList={fetchArticles} token={jwtoken} toggleForm={toggleFormBool}/> : null}
-        {editBool ? <EditArticleForm article={articleToEdit} refreshList={fetchArticles} token={jwtoken} toggleForm={toggleEditStates}/> : null}
+        {editBool ? <EditArticleForm article={article} refreshList={fetchArticles} token={jwtoken} toggleForm={toggleEditStates}/> : null}
         <List data={articles} isPublished={showPublished} token={jwtoken} refreshList={fetchArticles} toggleForm={toggleEditStates}/>
       </div>
     )
