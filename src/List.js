@@ -8,7 +8,7 @@ function List(props) {
     <div className='article-list'>
       {props.data.filter(obj => obj.published === props.isPublished).map(obj => {
         return (
-          <div className='article'>
+          <div className='article' onClick={() => props.toggleArticle(obj)}>
             <h2>{obj.title}</h2>
             <EditButton article={obj} toggleForm={props.toggleForm}/>
             <DeleteButton url={obj._id + '/delete'} token={props.token} refreshList={props.refreshList}/>

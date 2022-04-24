@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import NewArticleForm from './NewArticleForm';
 import EditArticleForm from './EditArticleForm';
+import FullArticle from './FullArticle';
 import Login from './Login';
 import List from './List';
 import Nav from './Nav';
@@ -11,7 +12,9 @@ function App() {
   const [ jwtoken, setJWToken ] = useState(null);
   const [ formBool, setFormBool ] = useState(false);
   const [ editBool, setEditBool ] = useState(false);
-  const [ article, setArticle ] = useState(null);
+  const [ articleBool, setArticleBool ] = useState(false);
+  const [ article, setArticle ] = useState({});
+  const [ comments, setComments ] = useState([]);
   const handlePublishBool = bool => {
     setPublishBool(bool);
   }
@@ -22,6 +25,16 @@ function App() {
         let arr = [];
         data.forEach(obj => arr.unshift(obj));
         setArticles(arr);
+      })
+      .catch(err => console.log(err));
+  }
+  const fetchArticleComments = obj => {
+    fetch('http://localhost:4000/api/posts/' + obj._id + '/comments')
+      .then(res => res.json())
+      .then(data => {
+        let arr = [];
+        data.forEach(obj => arr.unshift(obj));
+        setComments(arr);
       })
       .catch(err => console.log(err));
   }
@@ -36,14 +49,23 @@ function App() {
     setEditBool(!editBool);
     setArticle(obj);
   }
+  const toggleArticleBool = () => {
+    setArticleBool(!articleBool);
+  }
+  const toggleFullArticle = (obj={}) => {
+    setArticle(obj);
+    fetchArticleComments(obj);
+    toggleArticleBool();
+  }
 
   if (jwtoken && typeof jwtoken === 'string') {
     return (
       <div className='App'>
         <Nav handleBool={handlePublishBool} toggleForm={toggleFormBool}/>
+        {articleBool ? <FullArticle article={article} comments={comments} toggleBool={toggleArticleBool}/> : null}
         {formBool ? <NewArticleForm refreshList={fetchArticles} token={jwtoken} toggleForm={toggleFormBool}/> : null}
         {editBool ? <EditArticleForm article={article} refreshList={fetchArticles} token={jwtoken} toggleForm={toggleEditStates}/> : null}
-        <List data={articles} isPublished={showPublished} token={jwtoken} refreshList={fetchArticles} toggleForm={toggleEditStates}/>
+        <List data={articles} isPublished={showPublished} token={jwtoken} refreshList={fetchArticles} toggleForm={toggleEditStates} toggleArticle={toggleFullArticle}/>
       </div>
     )
   } else {
