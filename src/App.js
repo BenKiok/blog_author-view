@@ -62,7 +62,7 @@ function App() {
     return (
       <div className='App'>
         <Nav handleBool={handlePublishBool} toggleForm={toggleFormBool}/>
-        {articleBool ? <FullArticle article={article} comments={comments} toggleBool={toggleArticleBool}/> : null}
+        {articleBool ? <FullArticle article={article} comments={comments} refreshComments={fetchArticleComments} toggleBool={toggleArticleBool} token={jwtoken}/> : null}
         {formBool ? <NewArticleForm refreshList={fetchArticles} token={jwtoken} toggleForm={toggleFormBool}/> : null}
         {editBool ? <EditArticleForm article={article} refreshList={fetchArticles} token={jwtoken} toggleForm={toggleEditStates}/> : null}
         <List data={articles} isPublished={showPublished} token={jwtoken} refreshList={fetchArticles} toggleForm={toggleEditStates} toggleArticle={toggleFullArticle}/>
