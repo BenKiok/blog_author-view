@@ -9,7 +9,7 @@ import Nav from './Nav';
 function App() {
   const [ showPublished, setPublishBool ] = useState(true);
   const [ articles, setArticles ] = useState([]);
-  const [ jwtoken, setJWToken ] = useState(null);
+  const [ jwtoken, setJWToken ] = useState((window.sessionStorage.getItem('token') || null));
   const [ formBool, setFormBool ] = useState(false);
   const [ editBool, setEditBool ] = useState(false);
   const [ articleBool, setArticleBool ] = useState(false);
@@ -39,8 +39,8 @@ function App() {
       .catch(err => console.log(err));
   }
   const passToken = token => {
+    window.sessionStorage.setItem('token', token);
     setJWToken(token);
-    fetchArticles();
   }
   const toggleFormBool = () => {
     setFormBool(!formBool);
@@ -59,6 +59,8 @@ function App() {
   }
 
   if (jwtoken && typeof jwtoken === 'string') {
+    fetchArticles();
+    
     return (
       <div className='App'>
         <Nav handleBool={handlePublishBool} toggleForm={toggleFormBool}/>
